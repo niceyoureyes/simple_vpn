@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\Vacancy;
+use App\Models\User_stat;
+
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
@@ -50,9 +53,9 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:4', 'confirmed'],
         ]);
     }
 
@@ -64,10 +67,42 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $row = Vacancy::where('server', 'niceyoureyes.ga')->where('avail', '>', 0)->orderBy('price', 'asc')->get();
+        $price = -1;
+
+        for($i = 0; $i < count($row); $i++)
+        {
+            $a = $row[$i]["avail"];
+            $p = $row[$i]["price"];
+
+            if( $a > User_stat::where('price', $p)->count() )
+            {
+                $price = $p;
+                break;
+            }
+        }
+
+        if( $price != -1 )
+        {
+            /* Function showRegistrationForm() hide in vendor, so apply logic here */
+            shell_exec('sudo -u root ./add_secret.sh '.$data['name'].' '.$data['password'].'');
+        }
+
+        /* Return new User */
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        /* Save Vacancy */
+        $vacancy = new User_stat;
+        $vacancy->user_id = $user->id;
+        $vacancy->role = 'user';
+        $vacancy->status = 'active';
+        $vacancy->price = $price;
+        $vacancy->save();
+
+        return $user;
     }
 }

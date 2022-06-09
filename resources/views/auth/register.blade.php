@@ -3,13 +3,15 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-6 offset-md-3">
+        <div class="col-md-8">
             <div class="card">
+                <div class="card-header">{{ __('Register') }}</div>
+            
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
-                        <div class="row mb-1">
+                        <div class="row mb-3">
                             <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Login') }}</label>
 
                             <div class="col-md-6">
@@ -23,7 +25,7 @@
                             </div>
                         </div>
 
-                        <div class="row mb-1">
+                        <div class="row mb-3">
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
 
                             <div class="col-md-6">
@@ -37,7 +39,7 @@
                             </div>
                         </div>
 
-                        <div class="row mb-1">
+                        <div class="row mb-3">
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
@@ -51,7 +53,7 @@
                             </div>
                         </div>
 
-                        <div class="row mb-1">
+                        <div class="row mb-3">
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
 
                             <div class="col-md-6">
@@ -70,17 +72,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-2 offset-md-1">
-            <p class="fs-6">
-            Зарегистрируйтесь в один клик и используйте VPN с тем логином и паролем, который вы использовали при регистрации.
-            </p>
-            <p class="fs-6">
-            Количество мест: *
-            Стоимость: 0 руб
-            </p>
-        </div>
     </div>
-    @include('layouts.vpnimag')
 </div>
 
 @endsection

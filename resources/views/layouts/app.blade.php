@@ -42,14 +42,17 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link text-danger" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
+                                @if (isset($avail) && $avail == 0)
+                                @else
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link text-danger" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
+                                @endif
                             @endif
                         @else
                             <li class="nav-item dropdown">

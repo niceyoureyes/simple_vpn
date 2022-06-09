@@ -15,13 +15,20 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
         });
+
+        /* Added admin account */
+        DB::table('users')->insert(array(
+            'name' => 'admin',
+            'email' => 'iliechev2003@gmail.com',
+            'password' => '$2y$10$LceksIlDxUiapQF5LPK8hu2CdLZG7wfXEj31uUM0PvOxjEaFbv776'
+        ));
     }
 
     /**
