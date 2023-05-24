@@ -1,6 +1,6 @@
 # Simple VPN
 
-Website to manage vpn accounts: http://niceyoureyes.ga/
+Website to manage vpn accounts: http://niceyoureyes.ru/
 
 Modules:
 * Registration: entered login + password will be used for vpn authorization
